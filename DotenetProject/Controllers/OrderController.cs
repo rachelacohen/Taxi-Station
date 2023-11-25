@@ -1,4 +1,6 @@
-﻿using DotenetProject.Enitities;
+﻿
+using DotenetProject.Solid.Core.Enitities;
+using DotenetProject.Solid.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,26 +10,25 @@ namespace DotenetProject.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        DataContext context;
-        public OrderController(DataContext data)
+        private readonly IOrderService _orderService;
+
+        public OrderController(IOrderService orderService)
         {
-            context = data;
+            _orderService = orderService;
         }
+
         // GET: api/<PassangerController>
         [HttpGet]
         public IEnumerable<Order> GetAll()
         {
-            return context.orders;
+            return _orderService.GetOrders();
         }
 
         // GET api/<PassangerController>/5
         [HttpGet("{id}")]
         public ActionResult<Order> GetOne(int id)
         {
-            var v = context.orders.Find(x => x.Id == id);
-            if (v == null)
-                return NotFound();
-            return v;
+            return _orderService.GetOrder(id);
 
         }
 
@@ -35,29 +36,22 @@ namespace DotenetProject.Controllers
         [HttpPost]
         public void Post([FromBody] Order o)
         {
-            context.orders.Add(new Order(o.Source,o.Id,o.Destination,o.Order_time));
+            _orderService.AddOrder(o);
         }
 
         // PUT api/<PassangerController>/5
         [HttpPut("{id}")]
-        public ActionResult<Order> Put([FromBody] Order o)
+        public ActionResult<Order> Put(int id, [FromBody] Order o)
         {
-            var v = context.orders.Find(x => x.Id == o.Id);
-            if (v == null)
-                return NotFound();
-            v.Order_time.Equals(o.Order_time);
-            return NoContent();
+            return Ok(_orderService.UpdateOrder(id, o));
         }
 
         // DELETE api/<PassangerController>/5
         [HttpDelete("{id}")]
         public ActionResult<Order> Delete(int id)
         {
-            var order = context.orders.Find(x => x.Id == id);
-            if (order == null)
-                return NotFound();
-            context.orders.Remove(order);
-            return NoContent();
+            _orderService.DeleteOrder(id);
+            return Ok();
         }
     }
 }

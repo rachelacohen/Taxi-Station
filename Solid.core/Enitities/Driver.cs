@@ -1,4 +1,4 @@
-﻿namespace DotenetProject.Enitities
+﻿namespace DotenetProject.Solid.Core.Enitities
 {
     public class Driver
     {

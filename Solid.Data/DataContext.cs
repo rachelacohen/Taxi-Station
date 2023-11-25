@@ -1,6 +1,6 @@
-﻿using DotenetProject.Enitities;
+﻿using DotenetProject.Solid.Core.Enitities;
 
-namespace DotenetProject
+namespace DotenetProject.Solid.Data
 {
     public class DataContext
     {
@@ -9,7 +9,7 @@ namespace DotenetProject
         public List<Driver> drivers { get; set; }
         public DataContext()
         {
-            orders = new List<Order>(); 
+            orders = new List<Order>();
             taxies = new List<Taxi>();
             drivers = new List<Driver>();
         }

@@ -1,4 +1,6 @@
-﻿using DotenetProject.Enitities;
+﻿
+using DotenetProject.Solid.Core.Enitities;
+using DotenetProject.Solid.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Sockets;
@@ -10,57 +12,49 @@ namespace DotenetProject.Controllers
     public class TaxiController : ControllerBase
     {
 
-        DataContext context;
-        public TaxiController(DataContext data)
+        private readonly ITaxiService _taxiService;
+
+        public TaxiController(ITaxiService taxiService)
         {
-            context = data;
+            _taxiService = taxiService;
         }
+
 
         // GET: api/<TaxiController>
         [HttpGet]
         public IEnumerable<Taxi> Get()
         {
-            return context.taxies;
+            return _taxiService.GetTaxis();
         }
 
         // GET api/<TaxiController>/5
         [HttpGet("{id}")]
         public ActionResult<Taxi> Get(int id)
         {
-            var v = context.taxies.Find(x => x.Id == id);
-            if (v == null)
-                return NotFound();
-            return v;
+            return _taxiService.GetTaxi(id);
         }
 
         // POST api/<TaxiController>
         [HttpPost]
-        public void Post([FromBody] Taxi d)
+        public void Post([FromBody] Taxi t)
         {
-            context.taxies.Add(new Taxi(d.Id,d.IsAvailable));
+            _taxiService.AddTaxi(t);
         }
- 
+
 
         // PUT api/<TaxiController>/5
         [HttpPut("{id}")]
-        public ActionResult<Taxi> Put( [FromBody] Taxi t)
+        public ActionResult<Taxi> Put(int id, [FromBody] Taxi t)
         {
-            var v = context.taxies.Find(x => x.Id == t.Id);
-            if (v == null)
-                return NotFound();
-            v.IsAvailable = false;
-            return NoContent();
+            return Ok(_taxiService.UpdateTaxi(id, t));
         }
 
         // DELETE api/<TaxiController>/5
         [HttpDelete("{id}")]
         public ActionResult<Taxi> Delete(int id)
         {
-            var v = context.taxies.Find(x => x.Id == id);
-            if (v == null)
-                return NotFound();
-            context.taxies.Remove(v);
-            return NoContent();
+            _taxiService.DeleteTaxi(id);
+            return Ok();
         }
     }
 }

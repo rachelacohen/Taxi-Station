@@ -1,4 +1,6 @@
-﻿using DotenetProject.Enitities;
+﻿
+using DotenetProject.Solid.Core.Enitities;
+using DotenetProject.Solid.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,56 +10,47 @@ namespace DotenetProject.Controllers
     [ApiController]
     public class DriverController : ControllerBase
     {
-        DataContext context;
-        public DriverController(DataContext data)
+        private readonly IDriverService _DriverService;
+
+        public DriverController(IDriverService driverService)
         {
-            context = data;
-        }
-      
-        // GET: api/<DriverController>
-        [HttpGet]
-        public  IEnumerable<Driver> GetAll()
-        {
-            return context.drivers;
+            _DriverService = driverService;
         }
 
-        // GET api/<DriverController>/5
+      //  GET: api/<DriverController>
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            return Ok(_DriverService.GetDrivers());
+        }
+
+      //  GET api/<DriverController>/5
         [HttpGet("{id}")]
         public ActionResult<Driver> GetOne(int id)
         {
-            var v = context.drivers.Find(x => x.Id == id);
-            if (v == null)
-                return NotFound();
-            return v;
+            return _DriverService.GetDriver(id);
         }
 
-        // POST api/<DriverController>
+      //  POST api/<DriverController>
         [HttpPost]
         public void Post([FromBody] Driver d)
         {
-            context.drivers.Add(new Driver(d.Id, d.Name));
+            _DriverService.AddDriver(d);
         }
 
-        // PUT api/<DriverController>/5
+       // PUT api/<DriverController>/5
         [HttpPut("{id}")]
-        public ActionResult<Driver> PostDriver( [FromBody]Driver d )
+        public ActionResult<Driver> PutDriver(int id, [FromBody] Driver d)
         {
-            var v = context.drivers.Find(x => x.Id == d.Id);
-            if (v == null)
-                return NotFound();
-            v.Name = d.Name;
-            return NoContent();
+            return Ok(_DriverService.UpdateDriver(id, d));
         }
 
-        // DELETE api/<DriverController>/5
+        //DELETE api/<DriverController>/5
         [HttpDelete("{id}")]
         public ActionResult<Driver> Delete(int id)
         {
-            var driver = context.drivers.Find(x => x.Id == id);
-            if (driver == null)
-                return NotFound();
-            context.drivers.Remove(driver);
-            return NoContent();
+            _DriverService.DeleteDriver(id);
+            return Ok();
         }
     }
 }

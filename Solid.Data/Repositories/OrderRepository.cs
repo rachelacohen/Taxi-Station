@@ -1,0 +1,52 @@
+﻿
+
+using DotenetProject.Solid.Core.Enitities;
+using DotenetProject.Solid.Core.Repositories;
+
+namespace DotenetProject.Solid.Data.Repositories
+{
+    public class OrderRepository:IOrderRepository
+    {
+        private readonly DataContext _context;
+
+        public OrderRepository(DataContext context)
+        {
+            _context = context;
+        }
+
+        public Order AddOrder(Order o)
+        {
+            _context.orders.Add(o);
+            return o;
+        }
+
+        public void DeleteOrder(int id)
+        {
+            _context.orders.Remove(_context.orders.Find(x => x.Id == id));
+        }
+
+        public Order GetById(int id)
+        {
+            return _context.orders.Find(o => o.Id == id);
+        }
+
+        public List<Order> GetOrders()
+        {
+            return _context.orders;
+        }
+
+        public Order UpdateOrder(int id, Order o)
+        {
+            var updateOrder = _context.orders.Find(o => o.Id == id);
+            if (updateOrder != null)
+            {
+                updateOrder.Order_time = o.Order_time;
+                updateOrder.Source = o.Source;
+                updateOrder.Destination = o.Destination;
+                return updateOrder;
+            }
+            return null;
+        }
+    }
+}
+
