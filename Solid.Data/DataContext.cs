@@ -1,17 +1,17 @@
 ﻿using DotenetProject.Solid.Core.Enitities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DotenetProject.Solid.Data
 {
-    public class DataContext
+    public class DataContext: DbContext
     {
-        public List<Order> orders { get; set; }
-        public List<Taxi> taxies { get; set; }
-        public List<Driver> drivers { get; set; }
-        public DataContext()
+        public DbSet<Order> orders { get; set; }
+        public DbSet<Taxi> taxies { get; set; }
+        public DbSet<Driver> drivers { get; set; }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            orders = new List<Order>();
-            taxies = new List<Taxi>();
-            drivers = new List<Driver>();
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=racheli_db");
         }
+
     }
 }

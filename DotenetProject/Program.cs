@@ -12,14 +12,16 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
 builder.Services.AddScoped<ITaxiService, TaxiService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IDriverService, DriverService>();
 builder.Services.AddScoped<ITaxiRepository, TaxiRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IDriverRepository, DriverRepository>();
-builder.Services.AddSingleton<DataContext>();
 
+builder.Services.AddDbContext<DataContext>();
 
 var app = builder.Build();
 

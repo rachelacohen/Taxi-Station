@@ -1,5 +1,6 @@
 ﻿using DotenetProject.Solid.Core.Enitities;
 using DotenetProject.Solid.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace DotenetProject.Solid.Data.Repositories
 {
@@ -20,22 +21,22 @@ namespace DotenetProject.Solid.Data.Repositories
 
         public void DeleteTaxi(int id)
         {
-            _context.taxies.Remove(_context.taxies.Find(t => t.Id == id));
+            _context.taxies.Remove(_context.taxies.ToList().Find(t => t.Id == id));
         }
 
         public Taxi GetById(int id)
         {
-            return _context.taxies.Find(o => o.Id == id);
+            return _context.taxies.ToList().Find(o => o.Id == id);
         }
 
         public List<Taxi> GetTaxis()
         {
-            return _context.taxies;
+            return _context.taxies.ToList();
         }
 
         public Taxi UpdateTaxi(int id, Taxi t)
         {
-            var updateTaxi = _context.taxies.Find(t => t.Id == id);
+            var updateTaxi = _context.taxies.ToList().Find(t => t.Id == id);
             if (updateTaxi != null)
             {
                 updateTaxi.IsAvailable = t.IsAvailable;

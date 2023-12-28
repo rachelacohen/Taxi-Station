@@ -2,6 +2,8 @@
 
 using DotenetProject.Solid.Core.Enitities;
 using DotenetProject.Solid.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace DotenetProject.Solid.Data.Repositories
 {
@@ -22,22 +24,22 @@ namespace DotenetProject.Solid.Data.Repositories
 
         public void DeleteOrder(int id)
         {
-            _context.orders.Remove(_context.orders.Find(x => x.Id == id));
+            _context.orders.Remove(_context.orders.ToList().Find(x => x.Id == id));
         }
 
         public Order GetById(int id)
         {
-            return _context.orders.Find(o => o.Id == id);
+            return _context.orders.ToList().Find(o => o.Id == id);
         }
 
         public List<Order> GetOrders()
         {
-            return _context.orders;
+            return _context.orders.ToList();
         }
 
         public Order UpdateOrder(int id, Order o)
         {
-            var updateOrder = _context.orders.Find(o => o.Id == id);
+            var updateOrder = _context.orders.ToList().Find(o => o.Id == id);
             if (updateOrder != null)
             {
                 updateOrder.Order_time = o.Order_time;

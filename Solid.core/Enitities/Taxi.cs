@@ -10,5 +10,6 @@
             Id = id;
             IsAvailable = isAvailable;
         }
+        public Taxi() { }
     }
 }
