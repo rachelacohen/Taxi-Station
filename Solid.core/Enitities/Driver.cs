@@ -10,6 +10,9 @@
             Id = id;
             Name = name;
         }
+        public Taxi Taxi { get; set; }
+        public int TaxiId { get; set; }
+        public List<Order> Orders { get; set; }
         public Driver() { }
 
     }

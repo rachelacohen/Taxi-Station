@@ -22,6 +22,7 @@ namespace DotenetProject.Solid.Data.Repositories
         public void DeleteTaxi(int id)
         {
             _context.taxies.Remove(_context.taxies.ToList().Find(t => t.Id == id));
+            _context.SaveChanges();
         }
 
         public Taxi GetById(int id)
@@ -40,6 +41,7 @@ namespace DotenetProject.Solid.Data.Repositories
             if (updateTaxi != null)
             {
                 updateTaxi.IsAvailable = t.IsAvailable;
+                _context.SaveChanges();
                 return updateTaxi;
             }
             return null;

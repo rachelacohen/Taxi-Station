@@ -19,12 +19,14 @@ namespace DotenetProject.Solid.Data.Repositories
         public Order AddOrder(Order o)
         {
             _context.orders.Add(o);
+            _context.SaveChanges();
             return o;
         }
 
         public void DeleteOrder(int id)
         {
             _context.orders.Remove(_context.orders.ToList().Find(x => x.Id == id));
+            _context.SaveChanges();
         }
 
         public Order GetById(int id)
@@ -45,6 +47,7 @@ namespace DotenetProject.Solid.Data.Repositories
                 updateOrder.Order_time = o.Order_time;
                 updateOrder.Source = o.Source;
                 updateOrder.Destination = o.Destination;
+                _context.SaveChanges();
                 return updateOrder;
             }
             return null;

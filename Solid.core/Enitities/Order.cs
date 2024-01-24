@@ -14,6 +14,7 @@
             Destination = destination;
             Order_time = order_time;
         }
+        public Driver Driver { get; set; }
         public Order() { }
     }
 }

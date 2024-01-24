@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Solid.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231223220004_DB")]
-    partial class DB
+    [Migration("20240104224406_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,7 +36,13 @@ namespace Solid.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TaxiId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TaxiId")
+                        .IsUnique();
 
                     b.ToTable("drivers");
                 });
@@ -53,6 +59,9 @@ namespace Solid.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DriverId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Order_time")
                         .HasColumnType("datetime2");
 
@@ -61,6 +70,8 @@ namespace Solid.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DriverId");
 
                     b.ToTable("orders");
                 });
@@ -79,6 +90,39 @@ namespace Solid.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("taxies");
+                });
+
+            modelBuilder.Entity("DotenetProject.Solid.Core.Enitities.Driver", b =>
+                {
+                    b.HasOne("DotenetProject.Solid.Core.Enitities.Taxi", "Taxi")
+                        .WithOne("Driver")
+                        .HasForeignKey("DotenetProject.Solid.Core.Enitities.Driver", "TaxiId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Taxi");
+                });
+
+            modelBuilder.Entity("DotenetProject.Solid.Core.Enitities.Order", b =>
+                {
+                    b.HasOne("DotenetProject.Solid.Core.Enitities.Driver", "Driver")
+                        .WithMany("Orders")
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
+                });
+
+            modelBuilder.Entity("DotenetProject.Solid.Core.Enitities.Driver", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("DotenetProject.Solid.Core.Enitities.Taxi", b =>
+                {
+                    b.Navigation("Driver")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

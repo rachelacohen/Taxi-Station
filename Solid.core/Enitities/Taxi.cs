@@ -10,6 +10,9 @@
             Id = id;
             IsAvailable = isAvailable;
         }
+
+        public Driver Driver { get; set; }
+
         public Taxi() { }
     }
 }
