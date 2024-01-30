@@ -1,9 +1,13 @@
 ﻿
+using AutoMapper;
+using DotenetProject.Models;
 using DotenetProject.Solid.Core.Enitities;
 using DotenetProject.Solid.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Solid.core.DTOs;
 using System.Net.Sockets;
+using System.Text.RegularExpressions;
 
 namespace DotenetProject.Controllers
 {
@@ -13,47 +17,55 @@ namespace DotenetProject.Controllers
     {
 
         private readonly ITaxiService _taxiService;
+        private readonly IMapper _mapper;
 
-        public TaxiController(ITaxiService taxiService)
+        public TaxiController(ITaxiService taxiService,IMapper mapper)
         {
             _taxiService = taxiService;
+            _mapper = mapper;   
         }
 
 
         // GET: api/<TaxiController>
         [HttpGet]
-        public IEnumerable<Taxi> Get()
+        public ActionResult Get()
         {
-            return _taxiService.GetTaxis();
+            var list= _taxiService.GetTaxis();
+            var listDto = (_mapper.Map<IEnumerable< TaxiDto>>(list));
+            
+            return Ok(listDto);
         }
 
         // GET api/<TaxiController>/5
         [HttpGet("{id}")]
         public ActionResult<Taxi> Get(int id)
         {
-            return _taxiService.GetTaxi(id);
+            var item= _taxiService.GetTaxi(id);
+            return Ok(_mapper.Map<TaxiDto>(item));
         }
 
         // POST api/<TaxiController>
         [HttpPost]
-        public void Post([FromBody] Taxi t)
+        public async Task<Taxi> Post([FromBody] TaxiPostModel t)
         {
-            _taxiService.AddTaxi(t);
+            var tcast=new Taxi { Id=t.Id, IsAvailable=t.IsAvailable};
+                 return await _taxiService.AddTaxiAsync(tcast);
         }
 
 
         // PUT api/<TaxiController>/5
         [HttpPut("{id}")]
-        public ActionResult<Taxi> Put(int id, [FromBody] Taxi t)
+        public async Task<ActionResult<Taxi>> Put(int id, [FromBody] TaxiPostModel t)
         {
-            return Ok(_taxiService.UpdateTaxi(id, t));
+            var tcast = new Taxi { Id = t.Id, IsAvailable = t.IsAvailable };
+            return await Task.Run(()=> Ok(_taxiService.UpdateTaxiAsync(id, tcast)));
         }
 
         // DELETE api/<TaxiController>/5
         [HttpDelete("{id}")]
-        public ActionResult<Taxi> Delete(int id)
+        public async Task<ActionResult<Taxi>> Delete(int id)
         {
-            _taxiService.DeleteTaxi(id);
+           await _taxiService.DeleteTaxiAsync(id);
             return Ok();
         }
     }

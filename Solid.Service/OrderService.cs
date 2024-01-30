@@ -24,19 +24,19 @@ namespace DotenetProject.Solid.Services
             return _OrderRepository.GetById(id);
         }
 
-        public Order AddOrder(Order order)
+        public async Task<Order> AddOrderAsync(Order order)
         {
-            return _OrderRepository.AddOrder(order);
+            return await _OrderRepository.AddOrderAsync(order);
         }
 
-        public Order UpdateOrder(int id, Order order)
+        public async Task<Order> UpdateOrderAsync(int id, Order order)
         {
-            return _OrderRepository.UpdateOrder(id,order);
+            return await _OrderRepository.UpdateOrderAsync(id,order);
         }
 
-        public void DeleteOrder(int id)
+        public async Task DeleteOrderAsync(int id)
         {
-            _OrderRepository.DeleteOrder(id);
+            await _OrderRepository.DeleteOrderAsync(id);
         }
     }
 }

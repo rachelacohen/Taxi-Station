@@ -15,37 +15,37 @@ namespace DotenetProject.Solid.Data.Repositories
             _context = context;
         }
 
-       public List<Driver> GetDrivers()
+        public List<Driver> GetDrivers()
         {
-            
-            return _context.drivers.ToList();
+
+            return _context.Driivers.ToList();
         }
 
-        public Driver AddDriver(Driver d)
+        public async Task<Driver> AddDriverAsync(Driver d)
         {
-            _context.drivers.Add(d);
-            _context.SaveChanges();
+            _context.Driivers.ToList().Add(d);
+            await _context.SaveChangesAsync();
             return d;
         }
 
-        public void DeleteDriver(int id)
+        public async Task DeleteDriverAsync(int id)
         {
-            _context.drivers.Remove(_context.drivers.ToList().Find(x => x.Id == id));
-            _context.SaveChanges();
+            _context.Driivers.Remove(_context.Driivers.ToList().Find(x => x.Id == id));
+          await  _context.SaveChangesAsync();
         }
 
         public Driver GetById(int id)
         {
-            return _context.drivers.ToList().Find(d => d.Id == id);
+            return _context.Driivers.ToList().Find(d => d.Id == id);
         }
 
-        public Driver UpdateDriver(int id, Driver d)
+        public async Task<Driver> UpdateDriverAsync(int id, Driver d)
         {
-            var updateDriver = _context.drivers.ToList().Find(d => d.Id == id);
+            var updateDriver = _context.Driivers.ToList().Find(d => d.Id == id);
             if (updateDriver != null)
             {
                 updateDriver.Name = d.Name;
-                _context.SaveChanges();
+               await _context.SaveChangesAsync();
                 return updateDriver;
             }
             return null;

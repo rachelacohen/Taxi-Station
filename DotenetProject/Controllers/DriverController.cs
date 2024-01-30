@@ -1,8 +1,11 @@
 ﻿
+using AutoMapper;
+using DotenetProject.Models;
 using DotenetProject.Solid.Core.Enitities;
 using DotenetProject.Solid.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Solid.core.DTOs;
 
 namespace DotenetProject.Controllers
 {
@@ -11,17 +14,18 @@ namespace DotenetProject.Controllers
     public class DriverController : ControllerBase
     {
         private readonly IDriverService _DriverService;
-
-        public DriverController(IDriverService driverService)
+        private readonly IMapper _mapper;
+        public DriverController(IDriverService driverService, IMapper mapper)
         {
             _DriverService = driverService;
+            _mapper = mapper;
         }
 
       //  GET: api/<DriverController>
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_DriverService.GetDrivers());
+            return Ok(_mapper.Map<IEnumerable<DriverDto>>( _DriverService.GetDrivers()));
         }
 
       //  GET api/<DriverController>/5
@@ -33,24 +37,26 @@ namespace DotenetProject.Controllers
 
       //  POST api/<DriverController>
         [HttpPost]
-        public void Post([FromBody] Driver d)
+        public async Task PostAsync([FromBody] DriverPostModel d)
         {
-            _DriverService.AddDriver(d);
+            var dcast=new Driver { Id = d.Id, Name=d.Name, TaxiId=d.TaxiId };
+          await  _DriverService.AddDriverAsync(dcast);
         }
 
        // PUT api/<DriverController>/5
         [HttpPut("{id}")]
-        public ActionResult<Driver> PutDriver(int id, [FromBody] Driver d)
+        public async Task<ActionResult<Driver>> PutDriverAsync(int id, [FromBody] DriverPostModel d)
         {
-            return Ok(_DriverService.UpdateDriver(id, d));
+            var dcast = new Driver { Id = d.Id, Name = d.Name, TaxiId = d.TaxiId};
+            return await Task.Run(()=> Ok(_DriverService.UpdateDriverAsync(id, dcast)));
         }
 
         //DELETE api/<DriverController>/5
         [HttpDelete("{id}")]
-        public ActionResult<Driver> Delete(int id)
+        public async Task<ActionResult<Driver>> Delete(int id)
         {
-            _DriverService.DeleteDriver(id);
-            return Ok();
+          await  _DriverService.DeleteDriverAsync(id);
+            return  Ok();
         }
     }
 }

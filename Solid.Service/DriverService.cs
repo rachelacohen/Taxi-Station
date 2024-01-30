@@ -2,6 +2,7 @@
 using DotenetProject.Solid.Core.Enitities;
 using DotenetProject.Solid.Core.Repositories;
 using DotenetProject.Solid.Core.Services;
+
 using static DotenetProject.Solid.Services.DriverService;
 
 namespace DotenetProject.Solid.Services
@@ -26,19 +27,19 @@ namespace DotenetProject.Solid.Services
             return _DriverRepository.GetById(id);
         }
 
-        public Driver AddDriver(Driver d)
+        public async Task<Driver> AddDriverAsync(Driver d)
         {
-           return _DriverRepository.AddDriver(d);
+           return await _DriverRepository.AddDriverAsync(d);
         }
 
-        public Driver UpdateDriver(int id, Driver d)
+        public async Task<Driver> UpdateDriverAsync(int id, Driver d)
         {
-          return _DriverRepository.UpdateDriver(id, d);   
+          return await _DriverRepository.UpdateDriverAsync(id, d);   
         }
 
-        public void DeleteDriver(int id)
+        public async Task DeleteDriverAsync(int id)
         {
-            _DriverRepository.DeleteDriver(id); 
+           await _DriverRepository.DeleteDriverAsync(id); 
         }
     }
 }

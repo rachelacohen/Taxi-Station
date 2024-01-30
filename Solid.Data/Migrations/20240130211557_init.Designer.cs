@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Solid.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240104224406_Init")]
-    partial class Init
+    [Migration("20240130211557_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,7 +44,7 @@ namespace Solid.Data.Migrations
                     b.HasIndex("TaxiId")
                         .IsUnique();
 
-                    b.ToTable("drivers");
+                    b.ToTable("Driivers");
                 });
 
             modelBuilder.Entity("DotenetProject.Solid.Core.Enitities.Order", b =>
@@ -73,7 +73,7 @@ namespace Solid.Data.Migrations
 
                     b.HasIndex("DriverId");
 
-                    b.ToTable("orders");
+                    b.ToTable("Orderrs");
                 });
 
             modelBuilder.Entity("DotenetProject.Solid.Core.Enitities.Taxi", b =>
@@ -89,7 +89,7 @@ namespace Solid.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("taxies");
+                    b.ToTable("Taxiies");
                 });
 
             modelBuilder.Entity("DotenetProject.Solid.Core.Enitities.Driver", b =>

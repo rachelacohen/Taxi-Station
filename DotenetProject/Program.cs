@@ -3,6 +3,7 @@ using DotenetProject.Solid.Core.Services;
 using DotenetProject.Solid.Data;
 using DotenetProject.Solid.Data.Repositories;
 using DotenetProject.Solid.Services;
+using Solid.core.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,7 @@ builder.Services.AddScoped<IDriverRepository, DriverRepository>();
 
 builder.Services.AddDbContext<DataContext>();
 
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

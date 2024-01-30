@@ -9,11 +9,11 @@ namespace DotenetProject.Solid.Core.Repositories
 
         Taxi GetById(int id);
 
-        Taxi AddTaxi(Taxi order);
+        Task<Taxi> AddTaxiAsync(Taxi t);
 
-        Taxi UpdateTaxi(int id, Taxi order);
+        Task<Taxi> UpdateTaxiAsync(int id, Taxi t);
 
-        void DeleteTaxi(int id);
+        Task DeleteTaxiAsync(int id);
     }
 }
 

@@ -8,10 +8,10 @@ namespace DotenetProject.Solid.Core.Repositories
 
         Driver GetById(int id);
 
-        Driver AddDriver(Driver user);
+         Task<Driver> AddDriverAsync(Driver d);
 
-        Driver UpdateDriver(int id, Driver user);
+         Task<Driver> UpdateDriverAsync(int id, Driver d);
 
-        void DeleteDriver(int id);
+         Task DeleteDriverAsync(int id);
     }
 }

@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Solid.Data.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "taxies",
+                name: "Taxiies",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -19,11 +19,11 @@ namespace Solid.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_taxies", x => x.Id);
+                    table.PrimaryKey("PK_Taxiies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "drivers",
+                name: "Driivers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -33,17 +33,17 @@ namespace Solid.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_drivers", x => x.Id);
+                    table.PrimaryKey("PK_Driivers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_drivers_taxies_TaxiId",
+                        name: "FK_Driivers_Taxiies_TaxiId",
                         column: x => x.TaxiId,
-                        principalTable: "taxies",
+                        principalTable: "Taxiies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "orders",
+                name: "Orderrs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -55,37 +55,37 @@ namespace Solid.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_orders", x => x.Id);
+                    table.PrimaryKey("PK_Orderrs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_orders_drivers_DriverId",
+                        name: "FK_Orderrs_Driivers_DriverId",
                         column: x => x.DriverId,
-                        principalTable: "drivers",
+                        principalTable: "Driivers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_drivers_TaxiId",
-                table: "drivers",
+                name: "IX_Driivers_TaxiId",
+                table: "Driivers",
                 column: "TaxiId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_orders_DriverId",
-                table: "orders",
+                name: "IX_Orderrs_DriverId",
+                table: "Orderrs",
                 column: "DriverId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "orders");
+                name: "Orderrs");
 
             migrationBuilder.DropTable(
-                name: "drivers");
+                name: "Driivers");
 
             migrationBuilder.DropTable(
-                name: "taxies");
+                name: "Taxiies");
         }
     }
 }

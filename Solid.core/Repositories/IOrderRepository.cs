@@ -9,10 +9,9 @@ namespace DotenetProject.Solid.Core.Repositories
 
         Order GetById(int id);
 
-        Order AddOrder(Order order);
+         Task<Order> AddOrderAsync(Order o);
 
-        Order UpdateOrder(int id, Order order);
-
-        void DeleteOrder(int id);
+         Task<Order> UpdateOrderAsync(int id, Order o);
+         Task DeleteOrderAsync(int id);
     }
 }

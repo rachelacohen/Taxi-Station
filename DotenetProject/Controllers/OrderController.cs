@@ -1,8 +1,11 @@
 ﻿
+using AutoMapper;
+using DotenetProject.Models;
 using DotenetProject.Solid.Core.Enitities;
 using DotenetProject.Solid.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Solid.core.DTOs;
 
 namespace DotenetProject.Controllers
 {
@@ -11,46 +14,51 @@ namespace DotenetProject.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
-
-        public OrderController(IOrderService orderService)
+        private readonly IMapper _mapper;
+        public OrderController(IOrderService orderService, IMapper mapper)
         {
             _orderService = orderService;
+            _mapper = mapper;
         }
 
         // GET: api/<PassangerController>
         [HttpGet]
-        public IEnumerable<Order> GetAll()
+        public ActionResult GetAll()
         {
-            return _orderService.GetOrders();
+            var list=_orderService.GetOrders();
+            return Ok(_mapper.Map<IEnumerable<OrderDto>>(list));
+
         }
 
         // GET api/<PassangerController>/5
         [HttpGet("{id}")]
         public ActionResult<Order> GetOne(int id)
         {
-            return _orderService.GetOrder(id);
+            return Ok(_mapper.Map<OrderDto>( _orderService.GetOrder(id)));
 
         }
 
         // POST api/<PassangerController>
         [HttpPost]
-        public void Post([FromBody] Order o)
+        public async Task Post([FromBody] OrderPostModel o)
         {
-            _orderService.AddOrder(o);
+            var ocast = new Order { Source = o.Source, Destination = o.Destination, Order_time = o.Order_time };
+           await _orderService.AddOrderAsync(ocast);
         }
 
         // PUT api/<PassangerController>/5
         [HttpPut("{id}")]
-        public ActionResult<Order> Put(int id, [FromBody] Order o)
+        public async Task<ActionResult> Put(int id, [FromBody] OrderPostModel o)
         {
-            return Ok(_orderService.UpdateOrder(id, o));
+            var ocast = new Order { Source = o.Source, Destination = o.Destination, Order_time = o.Order_time };
+            return await Task.Run(()=>Ok(_orderService.UpdateOrderAsync(id, ocast)));
         }
 
         // DELETE api/<PassangerController>/5
         [HttpDelete("{id}")]
-        public ActionResult<Order> Delete(int id)
+        public async Task<ActionResult<Order>> Delete(int id)
         {
-            _orderService.DeleteOrder(id);
+          await  _orderService.DeleteOrderAsync(id);
             return Ok();
         }
     }

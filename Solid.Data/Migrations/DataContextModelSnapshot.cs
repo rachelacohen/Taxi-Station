@@ -42,7 +42,7 @@ namespace Solid.Data.Migrations
                     b.HasIndex("TaxiId")
                         .IsUnique();
 
-                    b.ToTable("drivers");
+                    b.ToTable("Driivers");
                 });
 
             modelBuilder.Entity("DotenetProject.Solid.Core.Enitities.Order", b =>
@@ -71,7 +71,7 @@ namespace Solid.Data.Migrations
 
                     b.HasIndex("DriverId");
 
-                    b.ToTable("orders");
+                    b.ToTable("Orderrs");
                 });
 
             modelBuilder.Entity("DotenetProject.Solid.Core.Enitities.Taxi", b =>
@@ -87,7 +87,7 @@ namespace Solid.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("taxies");
+                    b.ToTable("Taxiies");
                 });
 
             modelBuilder.Entity("DotenetProject.Solid.Core.Enitities.Driver", b =>

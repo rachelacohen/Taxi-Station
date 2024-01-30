@@ -23,19 +23,19 @@ namespace DotenetProject.Solid.Services
             return _TaxiRepository.GetById(id);
         }
 
-        public Taxi AddTaxi(Taxi t)
+        public async Task<Taxi> AddTaxiAsync(Taxi t)
         {
-           return _TaxiRepository.AddTaxi(t);
+           return await _TaxiRepository.AddTaxiAsync(t);
         }
 
-        public Taxi UpdateTaxi(int id, Taxi t)
+        public async Task<Taxi> UpdateTaxiAsync(int id, Taxi t)
         {
-            return (_TaxiRepository.UpdateTaxi(id, t)); 
+            return await (_TaxiRepository.UpdateTaxiAsync(id, t)); 
         }
 
-        public void DeleteTaxi(int id)
+        public async Task DeleteTaxiAsync(int id)
         {
-            _TaxiRepository.DeleteTaxi(id);
+          await  _TaxiRepository.DeleteTaxiAsync(id);
         }
     }
 }

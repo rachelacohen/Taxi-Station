@@ -6,10 +6,10 @@ namespace DotenetProject.Solid.Core.Services
     {
         List<Order> GetOrders();
         Order GetOrder(int id);
-        Order AddOrder(Order order);
+        Task<Order> AddOrderAsync(Order order);
 
-        Order UpdateOrder(int id, Order order);
+        Task<Order> UpdateOrderAsync(int id, Order order);
 
-        void DeleteOrder(int id);
+        Task DeleteOrderAsync(int id);
     }
 }

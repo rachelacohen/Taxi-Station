@@ -1,13 +1,9 @@
-﻿namespace DotenetProject.Solid.Core.Enitities
+﻿namespace DotenetProject.Models
 {
-    public class Order
+    public class OrderPostModel
     {
         public string Source { get; set; }
-        public int Id { get; set; }
         public string Destination { get; set; }
         public DateTime Order_time { get; set; }
-
-
-        public Driver Driver { get; set; }
     }
 }

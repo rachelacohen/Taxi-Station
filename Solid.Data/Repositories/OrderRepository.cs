@@ -16,38 +16,38 @@ namespace DotenetProject.Solid.Data.Repositories
             _context = context;
         }
 
-        public Order AddOrder(Order o)
+        public async Task<Order> AddOrderAsync(Order o)
         {
-            _context.orders.Add(o);
-            _context.SaveChanges();
+            _context.Orderrs.ToList().Add(o);
+          await  _context.SaveChangesAsync();
             return o;
         }
 
-        public void DeleteOrder(int id)
+        public async Task DeleteOrderAsync(int id)
         {
-            _context.orders.Remove(_context.orders.ToList().Find(x => x.Id == id));
-            _context.SaveChanges();
+            _context.Orderrs.Remove(_context.Orderrs.ToList().Find(x => x.Id == id));
+          await  _context.SaveChangesAsync();
         }
 
         public Order GetById(int id)
         {
-            return _context.orders.ToList().Find(o => o.Id == id);
+            return _context.Orderrs.ToList().Find(o => o.Id == id);
         }
 
         public List<Order> GetOrders()
         {
-            return _context.orders.ToList();
+            return _context.Orderrs.ToList();
         }
 
-        public Order UpdateOrder(int id, Order o)
+        public async Task<Order> UpdateOrderAsync(int id, Order o)
         {
-            var updateOrder = _context.orders.ToList().Find(o => o.Id == id);
+            var updateOrder = _context.Orderrs.ToList().Find(o => o.Id == id);
             if (updateOrder != null)
             {
                 updateOrder.Order_time = o.Order_time;
                 updateOrder.Source = o.Source;
                 updateOrder.Destination = o.Destination;
-                _context.SaveChanges();
+               await _context.SaveChangesAsync();
                 return updateOrder;
             }
             return null;

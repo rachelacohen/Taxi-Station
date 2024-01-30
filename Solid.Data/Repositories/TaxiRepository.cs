@@ -13,35 +13,37 @@ namespace DotenetProject.Solid.Data.Repositories
             _context = context;
         }
 
-        public Taxi AddTaxi(Taxi t)
+        public async Task<Taxi> AddTaxiAsync(Taxi t)
         {
-            _context.taxies.Add(t);
+
+            _context.Taxiies.ToList().Add(t);
+          await _context.SaveChangesAsync();
             return t;
         }
 
-        public void DeleteTaxi(int id)
+        public async Task DeleteTaxiAsync(int id)
         {
-            _context.taxies.Remove(_context.taxies.ToList().Find(t => t.Id == id));
-            _context.SaveChanges();
+            _context.Taxiies.Remove(_context.Taxiies.ToList().Find(t => t.Id == id));
+           await _context.SaveChangesAsync();
         }
 
         public Taxi GetById(int id)
         {
-            return _context.taxies.ToList().Find(o => o.Id == id);
+            return _context.Taxiies.ToList().Find(o => o.Id == id);
         }
 
         public List<Taxi> GetTaxis()
         {
-            return _context.taxies.ToList();
+            return _context.Taxiies.ToList();
         }
 
-        public Taxi UpdateTaxi(int id, Taxi t)
+        public async Task<Taxi> UpdateTaxiAsync(int id, Taxi t)
         {
-            var updateTaxi = _context.taxies.ToList().Find(t => t.Id == id);
+            var updateTaxi = _context.Taxiies.ToList().Find(t => t.Id == id);
             if (updateTaxi != null)
             {
                 updateTaxi.IsAvailable = t.IsAvailable;
-                _context.SaveChanges();
+              await  _context.SaveChangesAsync();
                 return updateTaxi;
             }
             return null;
