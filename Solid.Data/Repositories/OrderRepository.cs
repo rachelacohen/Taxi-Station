@@ -18,7 +18,7 @@ namespace DotenetProject.Solid.Data.Repositories
 
         public async Task<Order> AddOrderAsync(Order o)
         {
-            _context.Orderrs.ToList().Add(o);
+            _context.Orderrs.Add(o);
           await  _context.SaveChangesAsync();
             return o;
         }

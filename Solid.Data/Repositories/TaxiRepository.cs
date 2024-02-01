@@ -16,7 +16,7 @@ namespace DotenetProject.Solid.Data.Repositories
         public async Task<Taxi> AddTaxiAsync(Taxi t)
         {
 
-            _context.Taxiies.ToList().Add(t);
+            _context.Taxiies.Add(t);
           await _context.SaveChangesAsync();
             return t;
         }

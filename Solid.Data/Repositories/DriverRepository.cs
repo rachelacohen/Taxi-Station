@@ -23,7 +23,7 @@ namespace DotenetProject.Solid.Data.Repositories
 
         public async Task<Driver> AddDriverAsync(Driver d)
         {
-            _context.Driivers.ToList().Add(d);
+            _context.Driivers.Add(d);
             await _context.SaveChangesAsync();
             return d;
         }
