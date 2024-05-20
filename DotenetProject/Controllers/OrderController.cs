@@ -42,7 +42,7 @@ namespace DotenetProject.Controllers
         [HttpPost]
         public async Task Post([FromBody] OrderPostModel o)
         {
-            var ocast = new Order { Source = o.Source, Destination = o.Destination, Order_time = o.Order_time };
+            var ocast = new Order { Source = o.Source, Destination = o.Destination, Order_time = o.Order_time, CustPhone=o.CustPhone, DriverId=o.DriverId };
            await _orderService.AddOrderAsync(ocast);
         }
 
@@ -50,7 +50,7 @@ namespace DotenetProject.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] OrderPostModel o)
         {
-            var ocast = new Order { Source = o.Source, Destination = o.Destination, Order_time = o.Order_time };
+            var ocast = new Order { Source = o.Source, Destination = o.Destination, Order_time = o.Order_time, CustPhone=o.CustPhone, DriverId=o.DriverId };
             return await Task.Run(()=>Ok(_orderService.UpdateOrderAsync(id, ocast)));
         }
 

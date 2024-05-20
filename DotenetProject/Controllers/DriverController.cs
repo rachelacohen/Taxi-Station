@@ -3,6 +3,7 @@ using AutoMapper;
 using DotenetProject.Models;
 using DotenetProject.Solid.Core.Enitities;
 using DotenetProject.Solid.Core.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Solid.core.DTOs;
@@ -11,6 +12,7 @@ namespace DotenetProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class DriverController : ControllerBase
     {
         private readonly IDriverService _DriverService;
@@ -43,7 +45,6 @@ namespace DotenetProject.Controllers
           await  _DriverService.AddDriverAsync(dcast);
         }
 
-       // PUT api/<DriverController>/5
         [HttpPut("{id}")]
         public async Task<ActionResult<Driver>> PutDriverAsync(int id, [FromBody] DriverPostModel d)
         {
